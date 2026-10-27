@@ -39,3 +39,12 @@ Caveat: the router rules were adjusted while looking at the same 25 questions th
 | # | Error | Concrete input | Effect | Fix |
 |---|---|---|---|---|
 | 10 | The prompt's format example was a full sentence ("Un cliente se quejó de que no le respetaron el descuento [R01234]") | Q09 "¿Algún cliente tuvo un accidente?", Q11 | The local model copied the example verbatim and attached it to real review IDs (R01576, R00460) that say something else. **The citation check passed**, because the IDs exist and were retrieved | Example replaced by a content-free format. Lesson recorded for the failure analysis: verifying that cited IDs exist does not verify that the claim matches the review (`evidence/qa/qa_v1_example_copied.md`) |
+
+## Demo reviews and citations
+
+| # | Error | Concrete input | Effect | Fix |
+|---|---|---|---|---|
+| 11 | Citation check only recognised IDs of the form `R` + 5 digits | With demo reviews on, "¿A algún cliente se le cayó el baúl?" was answered citing **"[R0018]"**: the model rewrote `D0018` to match the `[R#####]` format in its own instructions | A mangled citation passed silently; the cited review was not shown | Instructions ask to copy the ID exactly; the check now treats anything that looks like an ID as a citation, so `R0018` is flagged invalid |
+| 12 | A scripted patch turned `\b` (word boundary) into a literal backspace character in the citation regex | Same question after fix 11 | Verification returned no citations at all | Line rewritten without shell escaping; repo scanned for control characters (none left) |
+
+Model behaviour seen on the demo set (for the failure analysis, not code errors): the local model escalated 10 plain product complaints to `urgent`; missed sarcasm in D0039 ("todo excelente, sobre todo cuando se cayó el retrovisor que me instalaron 🙃" → `normal`); and wrote Chinese in one explanation (D0033: "Parqueadero malo导致了车辆划痕").

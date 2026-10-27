@@ -45,8 +45,8 @@ def main():
         raise SystemExit(f"no labels for run {args.run_id}")
 
     lines = [f"# Classifier run `{args.run_id}`", "", f"Model: `{rows[0]['model']}` · reviews scored: {len(rows)}", "",
-             "| Metric | Real | Synthetic | Held-out |", "|---|---|---|---|"]
-    sets = [score([r for r in rows if r["synthetic"] == flag]) for flag in (0, 1, 2)]
+             "| Metric | Real | Synthetic | Held-out | Demo |", "|---|---|---|---|---|"]
+    sets = [score([r for r in rows if r["synthetic"] == flag]) for flag in (0, 1, 2, 3)]
     for key in sets[0]:
         lines.append(f"| {key} | " + " | ".join(str(s[key]) for s in sets) + " |")
     latencies = [r["latency_ms"] for r in rows]

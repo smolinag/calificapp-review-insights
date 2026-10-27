@@ -87,3 +87,11 @@ The real data has too few negative cases to test the system meaningfully, so 44 
 | Legal threat, leave threat, flirting, recognition, hidden at end, English | 6 | R02888, R01351 |
 
 Labels: 17 `urgent`, 15 `review`, 12 `normal`.
+
+## Demo reviews
+
+`data/demo_negative_cases.csv`: 45 invented complaints (defective helmets, loose tyre after maintenance, rude staff, reflective vests that stop reflecting, a top case that fell off, billing errors, sarcasm, a prompt injection, a child's helmet sold in adult size…), written by Claude to show the prototype with more than the 14 actionable real reviews. Labels: 21 `urgent`, 24 `review`.
+
+- Stored with `synthetic = 3` and attributed to **fictional employees EMP_91–EMP_96**, so no invented complaint lands on a real employee's pseudonym.
+- Off by default in the web page (toggle "Incluir reseñas de demostración"), marked 🧪 when shown. Counting questions and headline numbers always use real reviews only.
+- Also scored as a fourth column of the classifier evaluation. They were written after the classifier and alert words existed, by the same author, so they are a demo set, not independent evidence.

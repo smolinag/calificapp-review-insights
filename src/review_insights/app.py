@@ -16,7 +16,8 @@ conn = connect()  # one connection per rerun: sqlite connections can't cross Str
 
 def review_card(r, label=None):
     stars = "★" * r["rating"] + "☆" * (5 - r["rating"])
-    st.markdown(f"**{r['review_id']}** · {r['created_at'][:10]} · {stars} · {r['employee']}")
+    demo = " · 🧪 *demostración*" if r["synthetic"] else ""
+    st.markdown(f"**{r['review_id']}** · {r['created_at'][:10]} · {stars} · {r['employee']}{demo}")
     st.markdown(f"> {' '.join((r['comment'] or '').split())}")
     if (r["product"] or "").strip():
         st.caption(f"Producto: {r['product'].strip()}")
@@ -25,20 +26,23 @@ def review_card(r, label=None):
 
 
 st.title("Calificapp · Reseñas")
+include_demo = st.toggle("Incluir reseñas de demostración (inventadas)", value=False,
+                         help="45 quejas inventadas, con empleados ficticios EMP_91 a EMP_96, para mostrar el "
+                              "sistema con más casos. Los números de arriba siempre usan solo reseñas reales.")
 
 total, avg, commented = conn.execute(
     "SELECT count(*), avg(rating), sum(trim(coalesce(comment, '')) != '') FROM reviews WHERE synthetic = 0").fetchone()
 flagged = conn.execute(
     """SELECT r.*, l.severity, l.theme, l.reason FROM labels_ai l JOIN reviews r USING (review_id)
-       WHERE l.run_id = ? AND r.synthetic = 0 AND l.severity IN ('urgent', 'review')
-       ORDER BY l.severity = 'urgent' DESC, r.created_at DESC""", (LABEL_RUN,)).fetchall()
-urgent = sum(r["severity"] == "urgent" for r in flagged)
+       WHERE l.run_id = ? AND r.synthetic IN (0, ?) AND l.severity IN ('urgent', 'review')
+       ORDER BY l.severity = 'urgent' DESC, r.created_at DESC""", (LABEL_RUN, 3 if include_demo else 0)).fetchall()
+urgent = sum(r["severity"] == "urgent" for r in flagged if r["synthetic"] == 0)
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Reseñas", f"{total:,}".replace(",", "."))
 c2.metric("Calificación promedio", f"{avg:.2f} ★")
 c3.metric("Con comentario", f"{commented / total:.0%}")
-c4.metric("Para atender", f"{len(flagged)}", f"{urgent} urgentes", delta_color="inverse")
+c4.metric("Para atender", f"{sum(r['synthetic'] == 0 for r in flagged)}", f"{urgent} urgentes", delta_color="inverse")
 
 ask_tab, flagged_tab = st.tabs(["💬 Pregúntale a tus reseñas", "🚩 Atender primero"])
 
@@ -50,7 +54,7 @@ with ask_tab:
         submitted = st.form_submit_button("Preguntar")
     if submitted and question.strip():
         with st.spinner("Buscando en las reseñas… (puede tardar unos segundos)"):
-            result = ask(conn, question.strip())
+            result = ask(conn, question.strip(), include_demo=include_demo)
         route = {"counting": "Conteo exacto sobre los datos", "problems": "Búsqueda de problemas",
                  "general": "Búsqueda por significado"}[result["route"]]
         st.caption(f"{route} · {result['latency_ms'] / 1000:.1f} s")

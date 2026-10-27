@@ -11,6 +11,7 @@ DB_PATH = Path("data/reviews.db")
 REVIEWS_JSON = Path("data/reviews_anon.json")
 SYNTHETIC_CSV = Path("data/synthetic_cases.csv")
 HELDOUT_CSV = Path("data/heldout_cases.csv")  # synthetic = 2: never used to tune prompts or rules
+DEMO_CSV = Path("data/demo_negative_cases.csv")  # synthetic = 3: invented complaints for demos, fictional employees
 GOLD_CSV = Path("data/labels_gold.csv")
 
 SCHEMA = """
@@ -58,10 +59,12 @@ def _synthetic_rows(path, flag=1):
                    "has_rater_name": 0, "has_rater_phone": 0, "synthetic": flag}
 
 
-def rebuild(conn, reviews_json=REVIEWS_JSON, synthetic_csv=SYNTHETIC_CSV, gold_csv=GOLD_CSV, heldout_csv=HELDOUT_CSV):
+def rebuild(conn, reviews_json=REVIEWS_JSON, synthetic_csv=SYNTHETIC_CSV, gold_csv=GOLD_CSV, heldout_csv=HELDOUT_CSV,
+            demo_csv=DEMO_CSV):
     """Replaces reviews and gold labels with the contents of the data files. AI labels are kept."""
     real = json.loads(Path(reviews_json).read_text(encoding="utf-8"))
-    rows = [*real, *_synthetic_rows(synthetic_csv), *_synthetic_rows(heldout_csv, flag=2)]
+    rows = [*real, *_synthetic_rows(synthetic_csv), *_synthetic_rows(heldout_csv, flag=2),
+            *_synthetic_rows(demo_csv, flag=3)]
     with conn:
         conn.execute("DELETE FROM labels_gold")
         conn.execute("DELETE FROM reviews")

@@ -1056,3 +1056,48 @@ H0013,2,review,asesoria_producto,
 H0014,2,review,tiempo_espera,
 H0015,2,review,atencion,
 H0016,2,urgent,instalacion_taller,
+D0001,3,urgent,producto_defecto,Safety gear failed
+D0002,3,urgent,producto_defecto,
+D0003,3,urgent,producto_defecto,Reduced visibility
+D0004,3,review,producto_defecto,
+D0005,3,urgent,producto_defecto,Possible counterfeit safety gear
+D0006,3,urgent,instalacion_taller,
+D0007,3,urgent,instalacion_taller,
+D0008,3,urgent,instalacion_taller,
+D0009,3,urgent,instalacion_taller,
+D0010,3,review,atencion,
+D0011,3,review,atencion,
+D0012,3,review,atencion,
+D0013,3,urgent,conducta_inapropiada,Yelling at a customer is staff misconduct per CLAUDE.md
+D0014,3,review,atencion,
+D0015,3,urgent,producto_defecto,Safety gear no longer works
+D0016,3,review,asesoria_producto,
+D0017,3,urgent,producto_defecto,
+D0018,3,urgent,instalacion_taller,
+D0019,3,review,producto_defecto,"Ambiguous: items falling on the road could be a hazard, labeled review"
+D0020,3,review,producto_defecto,
+D0021,3,review,producto_defecto,
+D0022,3,review,producto_defecto,
+D0023,3,urgent,garantia_reclamo,Warranty claim refused
+D0024,3,urgent,garantia_reclamo,
+D0025,3,review,otro,Follow-up request
+D0026,3,review,garantia_reclamo,
+D0027,3,review,precio,
+D0028,3,review,precio,
+D0029,3,review,tiempo_espera,
+D0030,3,review,tiempo_espera,
+D0031,3,urgent,conducta_inapropiada,
+D0032,3,urgent,conducta_inapropiada,
+D0033,3,review,otro,
+D0034,3,review,otro,
+D0035,3,review,producto_defecto,Complaint inside 5 stars
+D0036,3,urgent,instalacion_taller,Hanging turn signal: visibility
+D0037,3,review,atencion,
+D0038,3,review,atencion,
+D0039,3,urgent,instalacion_taller,Sarcasm hiding a fitting failure
+D0040,3,review,asesoria_producto,"Wrong product caught before use, labeled review"
+D0041,3,urgent,garantia_reclamo,Prompt injection over an unresolved theft claim
+D0042,3,review,atencion,Mixed English and Spanish
+D0043,3,urgent,asesoria_producto,Child safety
+D0044,3,review,producto_defecto,
+D0045,3,urgent,instalacion_taller,

@@ -50,11 +50,11 @@ def document_text(review):
 
 
 def index(conn, batch_size=64):
-    """Embeds real reviews with a comment that are not indexed yet. Synthetic cases are left out:
-    they exist to test the classifier, and would distort answers about the store."""
+    """Embeds real reviews (and demo reviews, searchable only on request) that are not indexed yet.
+    Other synthetic cases are left out: they exist to test the classifier."""
     conn.execute(SCHEMA)
     pending = conn.execute(
-        """SELECT * FROM reviews WHERE synthetic = 0 AND trim(coalesce(comment, '')) != ''
+        """SELECT * FROM reviews WHERE synthetic IN (0, 3) AND trim(coalesce(comment, '')) != ''
            AND review_id NOT IN (SELECT review_id FROM embeddings WHERE model = ?)""", (EMBED_MODEL,)).fetchall()
     for start in range(0, len(pending), batch_size):
         batch = pending[start:start + batch_size]
@@ -65,10 +65,10 @@ def index(conn, batch_size=64):
     return len(pending)
 
 
-def search(conn, query, k=20, employee=None, date_from=None, date_to=None, max_rating=None):
+def search(conn, query, k=20, employee=None, date_from=None, date_to=None, max_rating=None, include_demo=False):
     """Top-k reviews by cosine similarity, after optional metadata filters."""
     conn.execute(SCHEMA)
-    where, params = ["e.model = ?"], [EMBED_MODEL]
+    where, params = ["e.model = ?", "r.synthetic IN (0, 3)" if include_demo else "r.synthetic = 0"], [EMBED_MODEL]
     for clause, value in [("r.employee = ?", employee), ("r.created_at >= ?", date_from),
                           ("r.created_at < ?", date_to), ("r.rating <= ?", max_rating)]:
         if value is not None:
