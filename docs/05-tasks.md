@@ -11,7 +11,7 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 - [x] **T06** Evaluation questions (~25) with answer keys, counting and meaning mixed. *Done when:* `eval/questions.json` written.
 
 ## Phase 2 — Baseline without context
-- [ ] **T07** Project skeleton (`pyproject`, `.env.example`, SQLite loader). *Done when:* `reviews.db` loads from the anonymized JSON.
+- [x] **T07** Project skeleton (`pyproject`, `.env.example`, SQLite loader). *Done when:* `reviews.db` loads from the anonymized JSON.
 - [ ] **T08** Classifier v0 generated without `CLAUDE.md`. *Done when:* runs on the full set; outputs and generated code saved in `evidence/before/`.
 - [ ] **T09** Metrics script for S1–S3. *Done when:* prints recall/precision with absolute counts, real vs synthetic.
 
