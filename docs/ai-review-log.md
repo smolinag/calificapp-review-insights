@@ -33,3 +33,9 @@ The first router let the local model decide everything: the route, the query and
 | 9 | Retrieval bug in code Claude wrote | `search_labeled` ranked only the top ~240 reviews before picking flagged ones | 3 flagged complaints never retrieved (R01215, R03045, R01972) | Rank all reviews (cheap at this size) |
 
 Caveat: the router rules were adjusted while looking at the same 25 questions they are scored on (25/25 after the fixes). That score is optimistic until checked on questions written afterwards.
+
+## Answer prompt (first version, written by Claude)
+
+| # | Error | Concrete input | Effect | Fix |
+|---|---|---|---|---|
+| 10 | The prompt's format example was a full sentence ("Un cliente se quejó de que no le respetaron el descuento [R01234]") | Q09 "¿Algún cliente tuvo un accidente?", Q11 | The local model copied the example verbatim and attached it to real review IDs (R01576, R00460) that say something else. **The citation check passed**, because the IDs exist and were retrieved | Example replaced by a content-free format. Lesson recorded for the failure analysis: verifying that cited IDs exist does not verify that the claim matches the review (`evidence/qa/qa_v1_example_copied.md`) |
