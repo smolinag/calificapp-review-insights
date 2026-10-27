@@ -12,8 +12,8 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 
 ## Phase 2 — Baseline without context
 - [x] **T07** Project skeleton (`pyproject`, `.env.example`, SQLite loader). *Done when:* `reviews.db` loads from the anonymized JSON.
-- [ ] **T08** Classifier v0 generated without `CLAUDE.md`. *Done when:* runs on the full set; outputs and generated code saved in `evidence/before/`.
-- [ ] **T09** Metrics script for S1–S3. *Done when:* prints recall/precision with absolute counts, real vs synthetic.
+- [x] **T08** Classifier v0 generated without `CLAUDE.md`. *Done when:* runs on the full set; outputs and generated code saved in `evidence/before/`.
+- [x] **T09** Metrics script for S1–S3. *Done when:* prints recall/precision with absolute counts, real vs synthetic.
 
 ## Phase 3 — Context artifact
 - [ ] **T10** Write `CLAUDE.md`. *Done when:* covers glossary, taxonomy, anonymization, prompt-injection rule, conventions, tests.
