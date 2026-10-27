@@ -17,7 +17,7 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 
 ## Phase 3 — Context artifact
 - [x] **T10** Write `CLAUDE.md`. *Done when:* covers glossary, taxonomy, anonymization, prompt-injection rule, conventions, tests.
-- [ ] **T11** Regenerate classifier with `CLAUDE.md`; compare. *Done when:* `evidence/after/` plus a comparison note with numbers.
+- [x] **T11** Regenerate classifier with `CLAUDE.md`; compare. *Done when:* `evidence/after/` plus a comparison note with numbers.
 
 ## Phase 4 — Retrieval + Q&A
 - [ ] **T12** Embeddings + Chroma index. *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
