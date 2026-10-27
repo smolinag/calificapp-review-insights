@@ -1,0 +1,17 @@
+# Raw client data and pseudonym mappings never enter the repo
+data/raw/
+*PRIVATE*
+*.db
+*.sqlite
+chroma/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
