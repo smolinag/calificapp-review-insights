@@ -3,8 +3,8 @@
 Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 
 ## Phase 1 — Data
-- [ ] **T01** Get the store owner's permission to use anonymized reviews. *Done when:* written confirmation saved (outside the repo) and referenced in the provenance note.
-- [ ] **T02** Ingest script: raw export → anonymized JSON, test company excluded. *Done when:* output has no `raterName`/`raterPhone`, no real employee/company/device names; unit test covers name replacement inside comments.
+- [x] **T01** Get the store owner's permission to use anonymized reviews. *Done when:* written confirmation saved (outside the repo) and referenced in the provenance note.
+- [x] **T02** Ingest script: raw export → anonymized JSON, test company excluded. *Done when:* output has no `raterName`/`raterPhone`, no real employee/company/device names; unit test covers name replacement inside comments.
 - [ ] **T03** Manual PII review of every comment. *Done when:* each comment checked; fixes and count recorded in the provenance note.
 - [ ] **T04** Write synthetic hard cases (≥ 40, all categories in the provenance note). *Done when:* stored with `synthetic = 1`.
 - [ ] **T05** Gold labels for all real comments + synthetic. *Done when:* `labels_gold.csv` complete; ambiguous cases listed in labeling notes.
