@@ -1,0 +1,35 @@
+{
+  "_about": "Owner questions with answer keys. Asked over the REAL reviews only (synthetic cases are for the classifier). 'counting' answers are exact numbers computed from data/reviews_anon.json; 'meaning' answers list the reviews a correct answer must cite (must_cite) and may cite (may_cite).",
+  "questions": [
+    {"id": "Q01", "type": "counting", "question": "¿Cuántas reseñas recibimos en septiembre de 2026?", "answer": 274},
+    {"id": "Q02", "type": "counting", "question": "¿Cuántas reseñas de 1 estrella hubo en 2026?", "answer": 11},
+    {"id": "Q03", "type": "counting", "question": "¿Cuál es el promedio de calificación de EMP_15?", "answer": 4.92},
+    {"id": "Q04", "type": "counting", "question": "¿Qué empleado tiene más reseñas?", "answer": "EMP_15 (413)"},
+    {"id": "Q05", "type": "counting", "question": "¿Qué porcentaje de las reseñas tiene comentario?", "answer": 31.3},
+    {"id": "Q06", "type": "counting", "question": "¿Cuántas reseñas con menos de 4 estrellas tiene EMP_24?", "answer": 2},
+    {"id": "Q07", "type": "counting", "question": "¿Cuál fue el mes con más reseñas?", "answer": "2026-02 (543)"},
+    {"id": "Q08", "type": "counting", "question": "¿Cuántas compras incluyeron cascos?", "answer": 656,
+     "note": "Product field contains 'casco' (includes 'cascos'). Free text: misspellings are not counted, so this is a lower bound"},
+
+    {"id": "Q09", "type": "meaning", "question": "¿Algún cliente tuvo un accidente o se cayó?", "must_cite": ["R01972"]},
+    {"id": "Q10", "type": "meaning", "question": "¿Hay quejas de comportamiento inapropiado de algún empleado?", "must_cite": ["R01301", "R00309"]},
+    {"id": "Q11", "type": "meaning", "question": "¿Qué reclamos de garantía siguen sin resolver?", "must_cite": ["R02021"]},
+    {"id": "Q12", "type": "meaning", "question": "¿De qué se quejan los clientes sobre los precios?", "must_cite": ["R00460", "R00933"]},
+    {"id": "Q13", "type": "meaning", "question": "¿Algún cliente pidió que lo llamáramos?", "must_cite": ["R01215"]},
+    {"id": "Q14", "type": "meaning", "question": "¿Qué empleados merecen un reconocimiento según los clientes?", "must_cite": ["R01351", "R02913", "R00855", "R01086", "R01876"]},
+    {"id": "Q15", "type": "meaning", "question": "¿Hay quejas sobre las chicas del segundo piso?", "must_cite": ["R01576"]},
+    {"id": "Q16", "type": "meaning", "question": "¿Qué opinan los clientes del café y las bebidas?", "must_cite": ["R00465", "R01220", "R02465"]},
+    {"id": "Q17", "type": "meaning", "question": "¿Algún cliente habló de la atención por WhatsApp o virtual?", "must_cite": ["R00523", "R01892"]},
+    {"id": "Q18", "type": "meaning", "question": "¿Hay clientes que pusieron buena calificación pero se quejaron de algo?", "must_cite": ["R00309", "R00460", "R00933"],
+     "note": "Needs rating and text together; retrieval sees text only"},
+    {"id": "Q19", "type": "meaning", "question": "¿Hubo problemas con llantas?", "must_cite": ["R01972"]},
+    {"id": "Q20", "type": "meaning", "question": "¿Algún cliente comparó con otra sede?", "must_cite": ["R02123"], "may_cite": ["R01993"]},
+    {"id": "Q21", "type": "meaning", "question": "¿Hay quejas por tiempos de espera?", "must_cite": [],
+     "note": "Correct answer is that there are none. R01993 mentions delay but it was the customer taking long. Tests hallucination"},
+    {"id": "Q22", "type": "meaning", "question": "¿Algún empleado fue grosero o atendió mal?", "must_cite": ["R02838", "R00355", "R03045"], "may_cite": ["R01576", "R02123", "R03023"]},
+    {"id": "Q23", "type": "meaning", "question": "¿Qué dicen los clientes de la instalación y el taller?", "must_cite": ["R01972", "R01487"], "may_cite": ["R02900"]},
+    {"id": "Q24", "type": "meaning", "question": "¿Hay clientes que el vendedor no supo atender por falta de experiencia?", "must_cite": ["R03023"]},
+    {"id": "Q25", "type": "hybrid", "question": "¿Cuántas quejas sobre precios hubo y cuáles son?", "answer": 2, "must_cite": ["R00460", "R00933"],
+     "note": "Needs a count of a meaning-based category: neither plain SQL nor top-k retrieval answers it alone"}
+  ]
+}

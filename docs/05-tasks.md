@@ -5,10 +5,10 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 ## Phase 1 — Data
 - [x] **T01** Get the store owner's permission to use anonymized reviews. *Done when:* written confirmation saved (outside the repo) and referenced in the provenance note.
 - [x] **T02** Ingest script: raw export → anonymized JSON, test company excluded. *Done when:* output has no `raterName`/`raterPhone`, no real employee/company/device names; unit test covers name replacement inside comments.
-- [ ] **T03** Manual PII review of every comment. *Done when:* each comment checked; fixes and count recorded in the provenance note.
-- [ ] **T04** Write synthetic hard cases (≥ 40, all categories in the provenance note). *Done when:* stored with `synthetic = 1`.
-- [ ] **T05** Gold labels for all real comments + synthetic. *Done when:* `labels_gold.csv` complete; ambiguous cases listed in labeling notes.
-- [ ] **T06** Evaluation questions (~25) with answer keys, counting and meaning mixed. *Done when:* `eval/questions.yaml` written.
+- [x] **T03** Manual PII review of every comment. *Done when:* each comment checked; fixes and count recorded in the provenance note.
+- [x] **T04** Write synthetic hard cases (≥ 40, all categories in the provenance note). *Done when:* stored with `synthetic = 1`.
+- [x] **T05** Gold labels for all real comments + synthetic. *Done when:* `labels_gold.csv` complete; ambiguous cases listed in labeling notes.
+- [x] **T06** Evaluation questions (~25) with answer keys, counting and meaning mixed. *Done when:* `eval/questions.json` written.
 
 ## Phase 2 — Baseline without context
 - [ ] **T07** Project skeleton (`pyproject`, `.env.example`, SQLite loader). *Done when:* `reviews.db` loads from the anonymized JSON.
