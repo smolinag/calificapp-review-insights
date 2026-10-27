@@ -16,7 +16,7 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 - [x] **T09** Metrics script for S1–S3. *Done when:* prints recall/precision with absolute counts, real vs synthetic.
 
 ## Phase 3 — Context artifact
-- [ ] **T10** Write `CLAUDE.md`. *Done when:* covers glossary, taxonomy, anonymization, prompt-injection rule, conventions, tests.
+- [x] **T10** Write `CLAUDE.md`. *Done when:* covers glossary, taxonomy, anonymization, prompt-injection rule, conventions, tests.
 - [ ] **T11** Regenerate classifier with `CLAUDE.md`; compare. *Done when:* `evidence/after/` plus a comparison note with numbers.
 
 ## Phase 4 — Retrieval + Q&A
