@@ -16,11 +16,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path)
     parser.add_argument("--no-filter", action="store_true", help="skip the per-review relevance check")
+    parser.add_argument("--questions", type=Path, default=Path("eval/questions.json"))
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
     conn = connect()
-    questions = json.loads(Path("eval/questions.json").read_text(encoding="utf-8"))["questions"]
+    questions = json.loads(args.questions.read_text(encoding="utf-8"))["questions"]
     rows, correct, invalid_total, latencies = [], 0, 0, []
     for q in questions:
         r = ask(conn, q["question"], relevance_filter=not args.no_filter)
@@ -46,7 +47,7 @@ def main():
         rows.append(f"| {q['id']} | {q['question']} | {r['route']} | {answer[:220]} | {verdict} |")
         print(q["id"], r["route"], verdict, flush=True)
 
-    lines = [f"# Q&A evaluation ({'without' if args.no_filter else 'with'} relevance filter)", "",
+    lines = [f"# Q&A evaluation: {args.questions.name} ({'without' if args.no_filter else 'with'} relevance filter)", "",
              f"**Correct: {correct}/{len(questions)}** · invalid citations (S4): {invalid_total} · "
              f"median latency {statistics.median(latencies)} ms", "",
              "Meaning questions count as correct only if every required review is cited. "

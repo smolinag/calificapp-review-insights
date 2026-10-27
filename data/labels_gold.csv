@@ -1040,3 +1040,19 @@ S0041,1,normal,otro,Written by staff not a customer (mirrors R02412)
 S0042,1,review,otro,Needs owner follow-up (mirrors R01215)
 S0043,1,review,otro,
 S0044,1,urgent,producto_defecto,Safety; only English case
+H0001,2,urgent,conducta_inapropiada,
+H0002,2,urgent,conducta_inapropiada,
+H0003,2,urgent,conducta_inapropiada,Different form of the R00309 word
+H0004,2,urgent,instalacion_taller,
+H0005,2,urgent,instalacion_taller,
+H0006,2,urgent,garantia_reclamo,
+H0007,2,urgent,garantia_reclamo,
+H0008,2,normal,otro,Alert word in a positive context
+H0009,2,normal,garantia_reclamo,Alert word in a positive context
+H0010,2,normal,tiempo_espera,"'Me tocó' means 'I had to', not touching"
+H0011,2,normal,atencion,'Me tocó' means 'I got'
+H0012,2,review,otro,
+H0013,2,review,asesoria_producto,
+H0014,2,review,tiempo_espera,
+H0015,2,review,atencion,
+H0016,2,urgent,instalacion_taller,

@@ -57,10 +57,11 @@ def main():
             severity, theme, note = "normal", "atencion", ""
         labels.append({"review_id": r["review_id"], "synthetic": 0, "severity": severity, "theme": theme, "note": note})
 
-    with open("data/synthetic_cases.csv", encoding="utf-8") as f:
-        for s in csv.DictReader(f):
-            labels.append({"review_id": s["review_id"], "synthetic": 1, "severity": s["gold_severity"],
-                           "theme": s["gold_theme"], "note": s["notes"]})
+    for path, flag in (("data/synthetic_cases.csv", 1), ("data/heldout_cases.csv", 2)):
+        with open(path, encoding="utf-8") as f:
+            for s in csv.DictReader(f):
+                labels.append({"review_id": s["review_id"], "synthetic": flag, "severity": s["gold_severity"],
+                               "theme": s["gold_theme"], "note": s["notes"]})
 
     with open("data/labels_gold.csv", "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["review_id", "synthetic", "severity", "theme", "note"])
@@ -69,10 +70,10 @@ def main():
 
     missing = set(EXCEPTIONS) - {l["review_id"] for l in labels}
     assert not missing, f"exceptions without a comment: {missing}"
-    for synthetic in (0, 1):
+    for synthetic, name in ((0, "real"), (1, "synthetic"), (2, "held-out")):
         subset = [l for l in labels if l["synthetic"] == synthetic]
         counts = {s: sum(l["severity"] == s for l in subset) for s in ("urgent", "review", "normal")}
-        print("synthetic" if synthetic else "real", len(subset), counts)
+        print(name, len(subset), counts)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,22 @@
+{
+  "_about": "Held-out questions, written after the system was tuned on eval/questions.json and committed before any further change. Never use them to adjust prompts or rules. Same format as eval/questions.json.",
+  "questions": [
+    {"id": "H01", "type": "counting", "question": "¿Cuántas reseñas tuvo EMP_20 en agosto de 2026?", "answer": 3},
+    {"id": "H02", "type": "counting", "question": "¿Cuál fue el promedio de calificación en marzo de 2026?", "answer": 4.94},
+    {"id": "H03", "type": "counting", "question": "¿Cuántas reseñas de 5 estrellas hubo en 2025?", "answer": 255},
+    {"id": "H04", "type": "counting", "question": "¿Qué empleado tuvo más reseñas en 2026?", "answer": "EMP_15 (379)"},
+    {"id": "H05", "type": "counting", "question": "¿Cuántas compras incluyeron llantas?", "answer": 108},
+
+    {"id": "H06", "type": "meaning", "question": "¿Algún cliente se sintió acosado o incómodo con un empleado?", "must_cite": ["R01301", "R00309"]},
+    {"id": "H07", "type": "meaning", "question": "¿Algún cliente se quejó porque no le mostraron una talla?", "must_cite": ["R02123"]},
+    {"id": "H08", "type": "meaning", "question": "¿Algún empleado le arregló algo a un cliente?", "must_cite": ["R02740"]},
+    {"id": "H09", "type": "meaning", "question": "¿Algún cliente pidió que le subieran el sueldo o ascendieran a un empleado?", "must_cite": ["R00855", "R01086", "R02913"]},
+    {"id": "H10", "type": "meaning", "question": "¿Hay clientes que dijeron que volverían?", "must_cite": ["R02984", "R03100"]},
+    {"id": "H11", "type": "meaning", "question": "¿Qué dicen de los tintos y las aromáticas?", "must_cite": ["R02465"]},
+    {"id": "H12", "type": "meaning", "question": "¿Algún cliente mencionó la navidad?", "must_cite": ["R00299"]},
+    {"id": "H13", "type": "meaning", "question": "¿Hubo algún reclamo por un casco?", "must_cite": ["R02021"]},
+    {"id": "H14", "type": "meaning", "question": "¿Algún cliente dijo que lo atendieron mal en su primera visita?", "must_cite": ["R02838"]},
+    {"id": "H15", "type": "meaning", "question": "¿Hay quejas sobre el parqueadero?", "must_cite": [],
+     "note": "No review mentions parking. Correct answer is that there are none"}
+  ]
+}

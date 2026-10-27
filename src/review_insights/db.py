@@ -10,6 +10,7 @@ from pathlib import Path
 DB_PATH = Path("data/reviews.db")
 REVIEWS_JSON = Path("data/reviews_anon.json")
 SYNTHETIC_CSV = Path("data/synthetic_cases.csv")
+HELDOUT_CSV = Path("data/heldout_cases.csv")  # synthetic = 2: never used to tune prompts or rules
 GOLD_CSV = Path("data/labels_gold.csv")
 
 SCHEMA = """
@@ -48,19 +49,19 @@ def connect(path=DB_PATH):
     return conn
 
 
-def _synthetic_rows(path):
+def _synthetic_rows(path, flag=1):
     with open(path, encoding="utf-8") as f:
         for s in csv.DictReader(f):
             yield {"review_id": s["review_id"], "company": "COMPANY_02", "employee": s["employee"],
                    "device": None, "created_at": s["created_at"], "rating": int(s["rating"]),
                    "comment": s["comment"], "product": s["product"] or None, "rating_time_ms": None,
-                   "has_rater_name": 0, "has_rater_phone": 0, "synthetic": 1}
+                   "has_rater_name": 0, "has_rater_phone": 0, "synthetic": flag}
 
 
-def rebuild(conn, reviews_json=REVIEWS_JSON, synthetic_csv=SYNTHETIC_CSV, gold_csv=GOLD_CSV):
+def rebuild(conn, reviews_json=REVIEWS_JSON, synthetic_csv=SYNTHETIC_CSV, gold_csv=GOLD_CSV, heldout_csv=HELDOUT_CSV):
     """Replaces reviews and gold labels with the contents of the data files. AI labels are kept."""
     real = json.loads(Path(reviews_json).read_text(encoding="utf-8"))
-    rows = [*real, *_synthetic_rows(synthetic_csv)]
+    rows = [*real, *_synthetic_rows(synthetic_csv), *_synthetic_rows(heldout_csv, flag=2)]
     with conn:
         conn.execute("DELETE FROM labels_gold")
         conn.execute("DELETE FROM reviews")
