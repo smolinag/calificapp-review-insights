@@ -15,6 +15,7 @@ from review_insights.db import connect
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path)
+    parser.add_argument("--no-filter", action="store_true", help="skip the per-review relevance check")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -22,7 +23,7 @@ def main():
     questions = json.loads(Path("eval/questions.json").read_text(encoding="utf-8"))["questions"]
     rows, correct, invalid_total, latencies = [], 0, 0, []
     for q in questions:
-        r = ask(conn, q["question"])
+        r = ask(conn, q["question"], relevance_filter=not args.no_filter)
         latencies.append(r["latency_ms"])
         invalid_total += len(r["invalid_citations"])
         must = set(q.get("must_cite", []))
@@ -45,7 +46,7 @@ def main():
         rows.append(f"| {q['id']} | {q['question']} | {r['route']} | {answer[:220]} | {verdict} |")
         print(q["id"], r["route"], verdict, flush=True)
 
-    lines = ["# Q&A evaluation", "",
+    lines = [f"# Q&A evaluation ({'without' if args.no_filter else 'with'} relevance filter)", "",
              f"**Correct: {correct}/{len(questions)}** · invalid citations (S4): {invalid_total} · "
              f"median latency {statistics.median(latencies)} ms", "",
              "Meaning questions count as correct only if every required review is cited. "
