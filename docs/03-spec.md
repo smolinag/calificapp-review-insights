@@ -18,6 +18,7 @@ Flow diagram: [diagrams/flow-diagram.pdf](diagrams/flow-diagram.pdf).
 |---|---|---|
 | C1 | `ingest` | Load the export, drop test company, anonymize, write to SQLite |
 | C2 | `classify` | Label each comment (theme, sentiment, severity, short reason) with the LLM |
+| C2b | `alerts` | Alert-word safety net applied after C2: strong words → urgent, weak words → at least review; never lowers severity |
 | C3 | `retrieve` (index) | Embed real comments (plus product) with `bge-m3` via Ollama; vectors stored in SQLite |
 | C4 | `router` | Decide if a question is *counting* or *meaning* |
 | C5 | `stats` | Answer counting questions with SQL |

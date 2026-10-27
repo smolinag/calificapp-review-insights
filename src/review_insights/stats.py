@@ -5,7 +5,7 @@ product_contains, theme, actionable (bool: classifier severity urgent/review).
 """
 from review_insights.classify import THEMES
 
-LABEL_RUN = "v1"
+LABEL_RUN = "v2"  # v1 model labels + alert words
 
 
 def _where(filters):

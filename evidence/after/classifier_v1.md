@@ -1,18 +1,18 @@
 # Classifier run `v1`
 
-Model: `qwen2.5:7b` · reviews scored: 1041
+Model: `qwen2.5:7b` · reviews scored: 1057
 
-| Metric | Real | Synthetic |
-|---|---|---|
-| n | 997 | 44 |
-| S1 urgent recall | 3/4 | 14/17 |
-| urgent flagged at least as review | 3/4 | 16/17 |
-| S2 actionable recall | 13/14 | 29/32 |
-| S3 actionable precision | 13/13 | 29/30 |
-| theme correct (actionable, flagged) | 7/13 | 25/29 |
-| exact severity | 995/997 | 38/44 |
+| Metric | Real | Synthetic | Held-out |
+|---|---|---|---|
+| n | 997 | 44 | 16 |
+| S1 urgent recall | 3/4 | 14/17 | 6/8 |
+| urgent flagged at least as review | 3/4 | 16/17 | 7/8 |
+| S2 actionable recall | 13/14 | 29/32 | 11/12 |
+| S3 actionable precision | 13/13 | 29/30 | 11/12 |
+| theme correct (actionable, flagged) | 7/13 | 25/29 | 8/11 |
+| exact severity | 995/997 | 38/44 | 12/16 |
 
-Latency per review: median 815 ms, p90 1059 ms, total 13.2 min
+Latency per review: median 810 ms, p90 1059 ms, total 13.4 min
 
 ## Errors on actionable decisions
 
@@ -25,3 +25,6 @@ Latency per review: median 815 ms, p90 1059 ms, total 13.2 min
 | S0004 | 3 | Qué maravilla que nadie conteste el whatsapp | review | normal | Nadie contestó el WhatsApp |
 | S0020 | 3 | meh | review | normal | Comentario neutro negativo |
 | S0041 | 3 | El cliente no quiso esperar al técnico | normal | review | Cliente no quiso esperar al técnico |
+| H0002 | 4 | Todo bien, aunque el que me atendió me dijo mamacita | urgent | review | Comentario inapropiado de un empleado |
+| H0003 | 5 | El vendedor muy morboso jaja pero buen servicio | urgent | normal | Comentario sobre el vendedor y buen servicio |
+| H0010 | 5 | Me tocó esperar un poquito pero valió la pena | normal | review | Espera breve pero satisfactoria |

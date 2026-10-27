@@ -87,7 +87,7 @@ def search(conn, query, k=20, employee=None, date_from=None, date_to=None, max_r
             for score, row in scored[:k]]
 
 
-def search_labeled(conn, query, k=20, run_id="v1", **filters):
+def search_labeled(conn, query, k=20, run_id="v2", **filters):
     """Half the slots go to reviews the classifier flagged as actionable, half to plain search.
 
     Complaints are rare and often worded generically ("mala atención"), so plain similarity

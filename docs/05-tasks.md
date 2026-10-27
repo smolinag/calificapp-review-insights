@@ -35,7 +35,7 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 
 ## Phase 7 — Break it
 - [ ] **T20** Failure hunt: ≥ 8 specific failing inputs with cause. *Done when:* `docs/failure-analysis.md`.
-- [ ] **T21** Fix one failure, re-measure, report what got worse. *Done when:* before/after numbers recorded.
+- [x] **T21** Fix one failure, re-measure, report what got worse. *Done when:* before/after numbers recorded.
 
 ## Phase 8 — Review
 - [ ] **T22** AI output review (intent, tests, security, performance, maintainability), ≥ 1 error caught and corrected. *Done when:* `docs/ai-review.md`.

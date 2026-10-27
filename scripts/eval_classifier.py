@@ -48,7 +48,7 @@ def main():
              "| Metric | Real | Synthetic | Held-out |", "|---|---|---|---|"]
     sets = [score([r for r in rows if r["synthetic"] == flag]) for flag in (0, 1, 2)]
     for key in sets[0]:
-        lines.append(f"| {key} | " + " | ".join(s[key] for s in sets) + " |")
+        lines.append(f"| {key} | " + " | ".join(str(s[key]) for s in sets) + " |")
     latencies = [r["latency_ms"] for r in rows]
     lines += ["", f"Latency per review: median {statistics.median(latencies)} ms, "
                   f"p90 {sorted(latencies)[int(len(latencies) * .9)]} ms, total {sum(latencies) / 60000:.1f} min", ""]

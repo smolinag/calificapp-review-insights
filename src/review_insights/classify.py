@@ -1,12 +1,13 @@
 """Labels each review comment with theme, sentiment and severity using the LLM.
 
-Usage: python -m review_insights.classify --run-id v0 [--prompt v0] [--limit N] [--synthetic-only]
+Usage: python -m review_insights.classify --run-id v2 [--prompt v1] [--no-alerts] [--limit N] [--synthetic-only]
+       python -m review_insights.classify --run-id v2 --derive-from v1   (reuse a run's model output, apply alerts)
 Resumable: reviews already labeled for the run are skipped.
 """
 import argparse
 import json
 
-from review_insights import llm
+from review_insights import alerts, llm
 from review_insights.db import connect
 
 THEMES = ["atencion", "asesoria_producto", "producto_defecto", "precio", "tiempo_espera",
@@ -69,7 +70,7 @@ def _parse(text):
     }
 
 
-def classify(review, prompt_name="v0"):
+def classify(review, prompt_name="v1", use_alerts=True):
     system, template = PROMPTS[prompt_name]
     prompt = template.format(rating=review["rating"], product=review["product"] or "-", comment=review["comment"],
                              themes=", ".join(THEMES), sentiments=", ".join(SENTIMENTS),
@@ -85,19 +86,42 @@ def classify(review, prompt_name="v0"):
             break
     else:
         label = {"theme": "otro", "sentiment": None, "severity": "review", "reason": "unparsed"}
+    if use_alerts:
+        label = alerts.apply(label, review["comment"])
     return {**label, "model": completion.model, "input_tokens": total_in, "output_tokens": total_out,
             "latency_ms": latency}
+
+
+def derive(conn, source_run, run_id):
+    rows = conn.execute("""SELECT l.*, r.comment FROM labels_ai l JOIN reviews r USING (review_id)
+                           WHERE l.run_id = ?""", (source_run,)).fetchall()
+    with conn:
+        conn.execute("DELETE FROM labels_ai WHERE run_id = ?", (run_id,))
+        for row in rows:
+            label = alerts.apply({k: row[k] for k in ("theme", "sentiment", "severity", "reason")}, row["comment"])
+            conn.execute(
+                """INSERT INTO labels_ai (review_id, run_id, theme, sentiment, severity, reason, model,
+                                          input_tokens, output_tokens, latency_ms)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (row["review_id"], run_id, label["theme"], label["sentiment"], label["severity"], label["reason"],
+                 row["model"] + " + alerts", row["input_tokens"], row["output_tokens"], row["latency_ms"]))
+    print(f"run {run_id}: {len(rows)} labels from {source_run} with alert words applied")
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-id", required=True)
-    parser.add_argument("--prompt", default="v0", choices=PROMPTS)
+    parser.add_argument("--prompt", default="v1", choices=PROMPTS)
+    parser.add_argument("--no-alerts", action="store_true", help="model output only, no alert-word safety net")
+    parser.add_argument("--derive-from", help="copy another run's model output and apply the alert words")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--synthetic-only", action="store_true")
     args = parser.parse_args()
 
     conn = connect()
+    if args.derive_from:
+        derive(conn, args.derive_from, args.run_id)
+        return
     query = """SELECT r.* FROM reviews r
                WHERE trim(coalesce(r.comment, '')) != ''
                  AND r.review_id NOT IN (SELECT review_id FROM labels_ai WHERE run_id = ?)"""
@@ -108,7 +132,7 @@ def main():
     print(f"{len(pending)} reviews to classify (run {args.run_id}, prompt {args.prompt})", flush=True)
 
     for n, review in enumerate(pending, 1):
-        label = classify(review, args.prompt)
+        label = classify(review, args.prompt, use_alerts=not args.no_alerts)
         with conn:
             conn.execute(
                 """INSERT INTO labels_ai (review_id, run_id, theme, sentiment, severity, reason, model,
