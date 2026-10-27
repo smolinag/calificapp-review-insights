@@ -50,7 +50,7 @@
 6. **Comment about a different employee.** Some comments praise someone other than the employee selected on the tablet (R01351 is rated for EMP_19 and asks for recognition for EMP_21). Per-employee results inherit this noise.
 7. **Employees registered twice.** Three people appear both by first name alone and with a surname (17 + 396 reviews, 10 + 1, 334 + 1). The owner confirmed they are the same person, so each pair is merged into one pseudonym (23 registered names → 20 employees). The alias list is private (`data/raw/employee_aliases_PRIVATE.json`).
 8. **Non-employee names in comments.** One comment (R01676) names a person who is not a registered employee. The owner asked for it to be removed; it becomes `[NOMBRE]`.
-9. **Reference labels drafted by Claude.** The gold labels (`data/labels_gold.csv`) were drafted by Claude Opus after reading every comment, with the reason for each non-trivial label in `scripts/build_gold_labels.py`. They have one annotator and no agreement measure, and the classifier under test is also a Claude model, so shared blind spots would go unnoticed. Mitigation: the author verifies every `urgent`/`review` label and every ambiguous case listed in the script.
+9. **Reference labels drafted by Claude.** The gold labels (`data/labels_gold.csv`) were drafted by Claude Opus after reading every comment, with the reason for each non-trivial label in `scripts/build_gold_labels.py`. They have one annotator and no agreement measure, and when Claude is the classifier under test, shared blind spots could go unnoticed. Mitigation: the author verifies every `urgent`/`review` label and every ambiguous case listed in the script.
 10. **Very few real positives.** Real data has 4 `urgent` and 10 `review` comments out of 997. Recall on real data is reported as counts ("4/4"), never as a percentage alone.
 
 ## Sensitive-data handling
@@ -63,14 +63,14 @@
 | Customer and other names typed inside comments | Reviewed on 2026-10-27: every comment of 40+ characters read; shorter ones checked for capitalized words, numbers, addresses, plates and social handles; every word appearing at most twice listed and read. Found 2 more: a non-employee first name (R01676) and an employee's nickname (R00417). Both are in the private removal list and become `[NOMBRE]`. Remaining risk: a lowercase name in a short comment that is also a common word |
 | Store, tablets | Pseudonyms (`COMPANY_02`, `DEV_08`) |
 | Raw export and pseudonym mapping | Kept outside the repo (`data/raw/`, `*PRIVATE*` are git-ignored) |
-| External API (Claude) | Receives only anonymized text |
+| LLM | Runs locally (Ollama); by default no review text leaves the computer. If Claude is enabled for comparison, it receives only anonymized text |
 | Incidents involving real staff | Shown to evaluators only in anonymized form and only with the owner's permission |
 
 ## Synthetic data
 
 The real data has too few negative cases to test the system meaningfully, so 44 synthetic reviews are added in `data/synthetic_cases.csv`, each with its expected labels. They are stored with `synthetic = 1` and every metric is reported separately for real and synthetic data.
 
-**How they were made.** The original plan was to write them by hand, to avoid the same model family writing the test and answering it. To save time they were **drafted by Claude Opus**, modelled on patterns found in the real comments (several mirror a real review without reusing its wording, noted in the `notes` column), and are open to edits by the author. The classifier is Claude Haiku. Both are Claude models, so a pass on synthetic cases is weaker evidence than a pass on real ones; this is a stated limitation in the failure analysis.
+**How they were made.** The original plan was to write them by hand, to avoid the same model family writing the test and answering it. To save time they were **drafted by Claude Opus**, modelled on patterns found in the real comments (several mirror a real review without reusing its wording, noted in the `notes` column), and are open to edits by the author. The default classifier is a different model family (Qwen 2.5, local), which limits the risk of the test writer and the test taker sharing blind spots. If Claude is used as the classifier for comparison, that risk returns and is stated next to those results.
 
 | Category | Cases | Mirrors in real data |
 |---|---|---|

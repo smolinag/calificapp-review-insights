@@ -21,5 +21,6 @@ Each phase ends with a commit, so the history shows the order of the work.
 |---|---|
 | Owner does not give permission | Switch to fully synthetic data calibrated on the aggregate statistics already recorded in the provenance note (no records copied) |
 | Too few real negatives to measure recall meaningfully | Synthetic hard cases, reported separately; recall reported with absolute counts (e.g., "12/12"), not just percentages |
-| Portkey not available | Direct Anthropic API, with token counts logged locally to compute cost |
+| Local model misses hard cases | Expected: reported in the failure analysis. If a Claude key or Portkey access becomes available, the same evaluation is rerun with Claude for comparison |
+| Full-context baseline does not fit in the local model's context | Reported as a finding (it supports retrieval); measured at the largest context that fits |
 | Time | Cut order if needed: digest polish → Streamlit (CLI is enough) → router LLM fallback |
