@@ -20,7 +20,7 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 - [x] **T11** Regenerate classifier with `CLAUDE.md`; compare. *Done when:* `evidence/after/` plus a comparison note with numbers.
 
 ## Phase 4 — Retrieval + Q&A
-- [ ] **T12** Embeddings + Chroma index. *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
+- [x] **T12** Embeddings + Chroma index. *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
 - [ ] **T13** Router + SQL stats. *Done when:* unit tests for ≥ 10 counting and meaning questions pass.
 - [ ] **T14** Answer with citations + verification. *Done when:* invalid citation in a crafted response is detected by a test.
 - [ ] **T15** Portkey integration (or local token logging). *Done when:* cost and latency recorded per call.

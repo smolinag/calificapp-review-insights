@@ -18,7 +18,7 @@ Flow diagram: [diagrams/flow-diagram.pdf](diagrams/flow-diagram.pdf).
 |---|---|---|
 | C1 | `ingest` | Load the export, drop test company, anonymize, write to SQLite |
 | C2 | `classify` | Label each comment (theme, sentiment, severity, short reason) with the LLM |
-| C3 | `embed` | Embed comments with a local multilingual model, store in Chroma |
+| C3 | `retrieve` (index) | Embed real comments (plus product) with `bge-m3` via Ollama; vectors stored in SQLite |
 | C4 | `router` | Decide if a question is *counting* or *meaning* |
 | C5 | `stats` | Answer counting questions with SQL |
 | C6 | `retrieve` | Top-k semantic search + metadata filters (employee, date range, rating) |
@@ -71,7 +71,8 @@ Severity is decided from the **text**, not the rating. When in doubt between two
 - If the rule is unsure, ask the LLM to classify the question. The decision is shown in the UI.
 
 **Retrieval (C6)**
-- Embedding model: `intfloat/multilingual-e5-small` (local, CPU).
+- Embedding model: `bge-m3` (multilingual) served by Ollama, on the GPU. Only real reviews are indexed; synthetic cases are for the classifier.
+- Two modes. **Plain:** top-k by cosine similarity. **Labeled:** half the slots for reviews the classifier flagged as actionable, half from plain search. Labeled is for questions about problems: plain similarity buries rare, generically worded complaints under hundreds of compliments (recall 21/31 plain vs 25/31 labeled, `evidence/retrieval/`), but it costs recall on non-complaint questions, so the router picks the mode.
 - Top-k = 20 by cosine similarity, with optional filters extracted from the question (employee pseudonym, date range, rating).
 
 **Answer (C7) and verification (C8)**
@@ -98,8 +99,8 @@ Severity is decided from the **text**, not the rating. When in doubt between two
 |---|---|---|
 | AI component (brief requires one) | **Retrieval pipeline** | **n8n automation**: works for the digest, but the logic would live in a no-code workflow that is harder to test, version and review; the Q&A use case needs retrieval anyway. |
 | Retrieval vs. full context | Retrieval for meaning questions, SQL for counting | Sending all ~1,000 comments (~20k tokens) works today and is simpler. Kept as baseline **A** in the evaluation, so the choice is measured rather than assumed (S7). |
-| Storage | SQLite + Chroma, local | DynamoDB copy: no benefit and risks touching the client's account. Postgres + pgvector: needs a server, unnecessary at this size. |
-| Embeddings | Local multilingual model | API embeddings: cost and sending data to another provider for no clear gain on short Spanish text. |
+| Storage | SQLite only (reviews, labels, vectors), brute-force cosine search | **Chroma** (the original plan): an extra dependency with no benefit at ~1,000 vectors; search takes well under a second without it. DynamoDB copy: risks touching the client's account. Postgres + pgvector: needs a server. Revisit past ~100k reviews |
+| Embeddings | `bge-m3` via Ollama | **`multilingual-e5-small` via sentence-transformers** (the original plan): needs PyTorch (~2 GB) next to Ollama, which already serves models. API embeddings: cost and data leaves the computer |
 | LLM | Local `qwen2.5:7b` via Ollama, Claude optional | **Claude API** as default: better on hard cases, but paid per call and sends client text to a third party; kept as an optional comparison. **Free cloud tiers** (Gemini, Groq): some use submitted data for training, unacceptable for client reviews. **Fine-tuned small classifier**: ~14 real negative examples are not enough to train one. |
 | UI | Streamlit | React/FastAPI: polish is not scored. |
 | Real-time dashboard | Cut | No value for the stated problem; ratings change slowly and the average hides the signal anyway. |
