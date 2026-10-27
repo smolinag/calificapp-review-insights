@@ -15,6 +15,20 @@ A store using [Calificapp](../Calificapp) tablets collects ~250 customer ratings
 | 5 | [Tasks](docs/05-tasks.md) | Task breakdown with acceptance criteria |
 | — | [Flow diagram](docs/diagrams/flow-diagram.pdf) | Data preparation, Q&A, weekly digest and evaluation flows |
 
+## Run it
+
+Requires Python 3.12 and [Ollama](https://ollama.com) with `qwen2.5:7b` and `bge-m3` pulled. Everything runs on this computer.
+
+```
+python -m venv .venv
+.venv/Scripts/python -m pip install -e ".[dev,app]"
+.venv/Scripts/python -m review_insights.db                          # build data/reviews.db
+.venv/Scripts/python -m review_insights.classify --run-id v1        # label comments (~15 min on GPU)
+.venv/Scripts/python -m review_insights.classify --run-id v2 --derive-from v1   # + alert words
+.venv/Scripts/python -m review_insights.retrieve index              # embeddings (~1 min)
+.venv/Scripts/streamlit run src/review_insights/app.py             # http://localhost:8501
+```
+
 ## Status
 
-Spec phase. No implementation yet.
+Working prototype: classification, Q&A with citations, web page. Evidence in `evidence/`, AI review log in `docs/ai-review-log.md`.

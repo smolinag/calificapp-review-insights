@@ -23,8 +23,8 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 - [x] **T12** Embeddings + Chroma index. *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
 - [x] **T13** Router + SQL stats. *Done when:* unit tests for ≥ 10 counting and meaning questions pass.
 - [x] **T14** Answer with citations + verification. *Done when:* invalid citation in a crafted response is detected by a test.
-- [ ] **T15** Portkey integration (or local token logging). *Done when:* cost and latency recorded per call.
-- [ ] **T16** Streamlit UI. *Done when:* ask a question, see answer, open cited review.
+- [x] **T15** ~~Portkey integration~~ Not applicable: the LLM runs locally (no API cost). Tokens and latency are logged per call in `labels_ai`.
+- [x] **T16** Streamlit UI. *Done when:* ask a question, see answer, open cited review.
 
 ## Phase 5 — Digest
 - [ ] **T17** Weekly digest HTML. *Done when:* generated for the last week of real data; every claim has a verified citation.

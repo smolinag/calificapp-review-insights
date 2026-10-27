@@ -1,0 +1,8 @@
+# The page shows client reviews: serve it on this computer only
+[server]
+address = "localhost"
+port = 8501
+headless = true
+
+[browser]
+gatherUsageStats = false
