@@ -1,13 +1,13 @@
 # Declared effort
 
-**Approximate total: [__] hours**, of which:
+**Approximate total: 6 hours**, of which:
 
 | Activity | Hours |
 |---|---|
-| Discovery: understanding the Calificapp backend and data export, owner permission | [__] |
-| Data: anonymization, manual PII review, synthetic and held-out cases, gold labels, evaluation questions | [__] |
-| Build: classifier, retrieval, router, answers, web page | [__] |
-| Evaluation, failure analysis, AI review, pitch and demo | [__] |
+| Discovery: understanding the Calificapp backend and data export, owner permission | 1 |
+| Data: anonymization, manual PII review, synthetic and held-out cases, gold labels, evaluation questions | 1 |
+| Build: classifier, retrieval, router, answers, web page | 2 |
+| Evaluation, failure analysis, AI review, pitch and demo | 2 |
 
 Commits run from 2026-10-27 (spec, plan and tasks first) to 2026-10-29. Code, prompts and synthetic data were generated with Claude Code; labels, data decisions and review were the author's.
 

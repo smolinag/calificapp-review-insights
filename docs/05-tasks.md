@@ -43,4 +43,4 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 ## Phase 9 — Communicate
 - [x] **T23** One pitch slide for the store owner.
 - [x] **T24** Demo recording or transcript, including at least one bad case. (`docs/demo.md`)
-- [ ] **T25** Declared-effort statement: hours and what was cut.
+- [x] **T25** Declared-effort statement: hours and what was cut. (`docs/effort.md`)
