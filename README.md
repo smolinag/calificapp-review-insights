@@ -13,7 +13,8 @@ A store using [Calificapp](../Calificapp) tablets collects ~250 customer ratings
 | 3 | [Spec](docs/03-spec.md) | What the system does, architecture, decisions and rejected alternatives |
 | 4 | [Plan](docs/04-plan.md) | Build order and how each phase maps to the submission checklist |
 | 5 | [Tasks](docs/05-tasks.md) | Task breakdown with acceptance criteria |
-| — | [Flow diagram](docs/diagrams/flow-diagram.pdf) | Data preparation, Q&A, weekly digest and evaluation flows |
+| — | [Flow diagram](docs/diagrams/flow-diagram.pdf) | As planned, in Spanish, before the code: data preparation, Q&A, weekly digest and evaluation flows |
+| — | [Flow diagram, as built](docs/diagrams/flow-diagram-en.pdf) | English. What was actually built: SQLite vectors, alert words, three routes, relevance check; the weekly digest marked as cut |
 
 ## Run it
 
@@ -36,6 +37,7 @@ python -m venv .venv
 | Problem statement, data provenance | `docs/01-problem-statement.md`, `docs/02-data-provenance.md` |
 | Spec, plan, tasks (committed before the code: `ace1f23`) | `docs/03-spec.md`, `docs/04-plan.md`, `docs/05-tasks.md` |
 | Context artifact and before/after evidence | `CLAUDE.md`, `evidence/before/`, `evidence/after/README.md` |
+| Flow diagram (as built, English) | `docs/diagrams/flow-diagram-en.pdf` |
 | Retrieval pipeline and why not n8n | `src/review_insights/retrieve.py`, spec § Decisions |
 | Results against the definition of success (S1–S7) | `evidence/eval_results.md` |
 | Measured improvement (before, change, after, what got worse) | `evidence/improvement/README.md` |

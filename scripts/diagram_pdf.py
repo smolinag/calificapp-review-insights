@@ -20,6 +20,7 @@ STYLES = {
     "claude": ("#FCE6D6", "#C8642D"),
     "out":    ("#DDF2E3", "#2E8B57"),
     "note":   ("#FFF8DC", "#B8960C"),
+    "cut":    ("#F6F6F6", "#9A9A9A"),  # planned, not built
 }
 INK = HexColor("#222222")
 MUTED = HexColor("#555555")
@@ -30,7 +31,7 @@ def box(c, x, y, w, h, kind, title, lines=(), step=None):
     c.setFillColor(HexColor(fill))
     c.setStrokeColor(HexColor(stroke))
     c.setLineWidth(1.4)
-    c.setDash(4, 3) if kind == "dummy" else c.setDash()
+    c.setDash(4, 3) if kind in ("dummy", "cut") else c.setDash()
     c.roundRect(x, y, w, h, 7, fill=1, stroke=1)
     c.setDash()
     pad = 8
