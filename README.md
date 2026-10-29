@@ -29,6 +29,22 @@ python -m venv .venv
 .venv/Scripts/streamlit run src/review_insights/app.py             # http://localhost:8501
 ```
 
+## Submission
+
+| Brief item | Where |
+|---|---|
+| Problem statement, data provenance | `docs/01-problem-statement.md`, `docs/02-data-provenance.md` |
+| Spec, plan, tasks (committed before the code: `ace1f23`) | `docs/03-spec.md`, `docs/04-plan.md`, `docs/05-tasks.md` |
+| Context artifact and before/after evidence | `CLAUDE.md`, `evidence/before/`, `evidence/after/README.md` |
+| Retrieval pipeline and why not n8n | `src/review_insights/retrieve.py`, spec § Decisions |
+| Results against the definition of success (S1–S7) | `evidence/eval_results.md` |
+| Measured improvement (before, change, after, what got worse) | `evidence/improvement/README.md` |
+| AI output review | `docs/ai-review.md` (running log: `docs/ai-review-log.md`) |
+| Failure analysis | `docs/failure-analysis.md` |
+| Pitch slide | `docs/pitch.pdf` |
+| Demo transcript | `docs/demo.md` |
+| Declared effort and what was cut | `docs/effort.md` |
+
 ## Status
 
-Working prototype: classification, Q&A with citations, web page. Evidence in `evidence/`, AI review log in `docs/ai-review-log.md`.
+Working prototype: classification of every comment, Q&A with citations, web page. On the 997 real comments it flags all 14 actionable reviews (4/4 urgent) with no false alarms; open-ended questions are answered correctly about half the time (`evidence/eval_results.md`). The weekly digest promised in the problem statement was cut (`docs/effort.md`).

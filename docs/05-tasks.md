@@ -20,27 +20,27 @@ Status: `[ ]` to do · `[x]` done. Each task lists its acceptance criterion.
 - [x] **T11** Regenerate classifier with `CLAUDE.md`; compare. *Done when:* `evidence/after/` plus a comparison note with numbers.
 
 ## Phase 4 — Retrieval + Q&A
-- [x] **T12** Embeddings + Chroma index. *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
-- [x] **T13** Router + SQL stats. *Done when:* unit tests for ≥ 10 counting and meaning questions pass.
-- [x] **T14** Answer with citations + verification. *Done when:* invalid citation in a crafted response is detected by a test.
+- [x] **T12** Embeddings + vector index (SQLite; Chroma dropped, see spec Decisions). *Done when:* "¿Algún cliente tuvo un accidente?" returns R01972 in the top 20.
+- [x] **T13** Router + SQL stats. *Done when:* unit tests for ≥ 10 counting and meaning questions pass. (Marked done before the tests existed; written in the final review: `tests/test_router.py`, `tests/test_stats.py`.)
+- [x] **T14** Answer with citations + verification. *Done when:* invalid citation in a crafted response is detected by a test. (Test written in the final review: `tests/test_verify.py`.)
 - [x] **T15** ~~Portkey integration~~ Not applicable: the LLM runs locally (no API cost). Tokens and latency are logged per call in `labels_ai`.
 - [x] **T16** Streamlit UI. *Done when:* ask a question, see answer, open cited review.
 
 ## Phase 5 — Digest
-- [ ] **T17** Weekly digest HTML. *Done when:* generated for the last week of real data; every claim has a verified citation.
+- [ ] ~~**T17** Weekly digest HTML.~~ **Cut**: time went to classifier recall and Q&A evaluation; the urgent list in the web page covers "Atender primero". Declared in the effort statement. *Done when:* generated for the last week of real data; every claim has a verified citation.
 
 ## Phase 6 — Evaluate
-- [ ] **T18** Full-context baseline (A) vs retrieval (B) on the evaluation questions. *Done when:* accuracy, cost and latency table for both.
-- [ ] **T19** Compute S1–S7. *Done when:* `evidence/eval_results.md` with numbers and inputs.
+- [x] **T18** Full-context baseline (A) vs retrieval (B) on the evaluation questions. *Done when:* accuracy, cost and latency table for both.
+- [x] **T19** Compute S1–S7. *Done when:* `evidence/eval_results.md` with numbers and inputs.
 
 ## Phase 7 — Break it
-- [ ] **T20** Failure hunt: ≥ 8 specific failing inputs with cause. *Done when:* `docs/failure-analysis.md`.
+- [x] **T20** Failure hunt: ≥ 8 specific failing inputs with cause. *Done when:* `docs/failure-analysis.md`.
 - [x] **T21** Fix one failure, re-measure, report what got worse. *Done when:* before/after numbers recorded.
 
 ## Phase 8 — Review
-- [ ] **T22** AI output review (intent, tests, security, performance, maintainability), ≥ 1 error caught and corrected. *Done when:* `docs/ai-review.md`.
+- [x] **T22** AI output review (intent, tests, security, performance, maintainability), ≥ 1 error caught and corrected. *Done when:* `docs/ai-review.md`.
 
 ## Phase 9 — Communicate
-- [ ] **T23** One pitch slide for the store owner.
-- [ ] **T24** Demo recording or transcript, including at least one bad case.
+- [x] **T23** One pitch slide for the store owner.
+- [x] **T24** Demo recording or transcript, including at least one bad case. (`docs/demo.md`)
 - [ ] **T25** Declared-effort statement: hours and what was cut.
