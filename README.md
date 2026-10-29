@@ -34,6 +34,7 @@ python -m venv .venv
 
 | Brief item | Where |
 |---|---|
+| Motivation and why this solution (3 pages, PDF) | `docs/motivation/motivation.pdf` |
 | Problem statement, data provenance | `docs/01-problem-statement.md`, `docs/02-data-provenance.md` |
 | Spec, plan, tasks (committed before the code: `ace1f23`) | `docs/03-spec.md`, `docs/04-plan.md`, `docs/05-tasks.md` |
 | Context artifact and before/after evidence | `CLAUDE.md`, `evidence/before/`, `evidence/after/README.md` |

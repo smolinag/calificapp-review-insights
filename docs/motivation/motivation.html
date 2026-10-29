@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calificapp Review Insights — Motivation and solution choice</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  @page { size: letter; margin: 18mm 18mm 16mm }
+  body { font-family: 'Public Sans', Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1F2A33; margin: 0 }
+  h1, h2, h3 { font-family: 'Oswald', Arial, sans-serif; font-weight: 600; color: #1F2A33; margin: 0 }
+  h1 { font-size: 24pt; line-height: 1.1 }
+  h2 { font-size: 15pt; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid #E1DCD2 }
+  h3 { font-size: 11.5pt; margin: 14px 0 4px }
+  p { margin: 0 0 8px }
+  .eyebrow { font-size: 9.5pt; font-weight: 600; color: #B4471A; letter-spacing: .02em; margin-bottom: 4px }
+  .lead { font-size: 11.5pt; color: #3A4652; margin-top: 8px }
+  .stats { display: flex; gap: 10px; margin: 14px 0 6px }
+  .stat { flex: 1; background: #F6F4EF; border-radius: 8px; padding: 10px 12px }
+  .stat b { display: block; font-family: 'Oswald', Arial, sans-serif; font-size: 20pt; font-weight: 600; color: #B4471A; line-height: 1.1 }
+  .stat span { font-size: 9pt; color: #4A5560 }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.5pt }
+  th { text-align: left; font-weight: 600; background: #F6F4EF; padding: 5px 7px; border-bottom: 1px solid #D8D2C6 }
+  td { padding: 5px 7px; border-bottom: 1px solid #ECE8E0; vertical-align: top }
+  td.n { white-space: nowrap; font-weight: 600 }
+  .callout { background: #FFF6EE; border-left: 4px solid #B4471A; padding: 9px 12px; margin: 10px 0; border-radius: 0 6px 6px 0 }
+  .muted { color: #5E6873; font-size: 9pt }
+  ul { margin: 4px 0 8px; padding-left: 18px } li { margin-bottom: 3px }
+  .avoid { break-inside: avoid }
+  table.fixed { table-layout: fixed }
+  table.fixed td.n { white-space: normal }
+  h2, h3 { break-after: avoid }
+  code { font-size: 9pt; background: #F1EEE8; padding: 0 3px; border-radius: 3px }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">CALIFICAPP REVIEW INSIGHTS · PERFICIENT GLOBAL AI-FIRST ACADEMY · L1 CASE 05</div>
+<h1>Why this project exists, and why this is the solution</h1>
+<p class="lead">A motorcycle-gear store in Colombia collects customer ratings on a tablet at the counter. The numbers say everything is fine. A handful of comments say otherwise, and nobody reads them.</p>
+
+<div class="stats">
+  <div class="stat"><b>3,184</b><span>real ratings, Oct 2025 – Oct 2026</span></div>
+  <div class="stat"><b>4.9★</b><span>monthly average; it never moves</span></div>
+  <div class="stat"><b>94%</b><span>are 5★ (2,992 of 3,184)</span></div>
+  <div class="stat"><b>14</b><span>of 997 comments need the owner to act</span></div>
+</div>
+
+<h2>1. Motivation</h2>
+
+<h3>The user and the situation</h3>
+<p>The user is the <b>store owner</b>: not technical, no time to read comments, looks at the numbers occasionally. The store sells helmets, tyres, rain gear and accessories, and also <b>fits them</b>: tyre changes, crash bars, luggage racks. After each sale the customer rates the employee who served them from 1 to 5 on a <b>Calificapp</b> tablet, and can leave a comment.</p>
+<p>About a third of the ratings carry a comment, typically short (median 18 characters) and in informal Colombian Spanish: "exelente atencion", "melo", emoji. Almost all are compliments. The owner sees a 4.9 average and reasonably concludes there is nothing to look at.</p>
+
+<h3>What is hidden in the comments</h3>
+<p>Reading all 997 real comments by hand found 14 that the owner must act on. Some of them:</p>
+<table class="avoid">
+  <tr><th>Review</th><th>Stars</th><th>What it says (paraphrased)</th><th>Why it matters</th></tr>
+  <tr><td class="n">R01972</td><td>1</td><td>A tyre the store fitted came off the rim ("despestañada") and the rider crashed</td><td>Safety incident; possible liability</td></tr>
+  <tr><td class="n">R00309</td><td><b>5</b></td><td>"Excellent service. But very lewd"</td><td>Possible staff misconduct, hidden in a top rating</td></tr>
+  <tr><td class="n">R02021</td><td>1</td><td>Warranty claim on a helmet, no solution given</td><td>Unresolved claim; risk of a formal complaint</td></tr>
+  <tr><td class="n">R00460, R00933</td><td><b>5</b></td><td>"…but the discount was missing", "…although prices are high"</td><td>Price friction inside top ratings</td></tr>
+  <tr><td class="n">R01215</td><td><b>5</b></td><td>"It's a special order… please call if you get it"</td><td>A sale waiting on a call nobody made</td></tr>
+</table>
+
+<div class="callout avoid"><b>The star rating cannot find them.</b> Of the 14 reviews that need action, <b>4 are 5★</b>, including one of the 4 urgent ones (R00309). Reading only the 1–3★ comments would find 10 of 14 and miss an urgent case. And a 1★ can be a mis-tap on a positive comment. The decision has to come from the text.</div>
+
+<div class="avoid">
+<h3>Why it is worth solving now</h3>
+<ul>
+  <li><b>The cost of a miss is asymmetric.</b> One unread safety report or harassment complaint can cost more than everything the ratings are meant to improve. The owner tolerates some false alarms; not a missed crash report.</li>
+  <li><b>Nobody will read 1,000 compliments.</b> Asking the owner or a manager to read every comment is the obvious fix, and it is not happening.</li>
+  <li><b>The history expires.</b> The Calificapp backend deletes each rating 500 days after it is created, so anything not analysed is lost.</li>
+  <li><b>The owner has questions the dashboard cannot answer:</b> "¿Algún cliente tuvo un accidente?", "¿Qué dicen de los cascos?", "¿Cuántas reseñas de 1 estrella hubo en septiembre?".</li>
+</ul>
+</div>
+
+<h3>What success means</h3>
+<p>Defined before any code (<code>docs/01-problem-statement.md</code>) and measured on hand-labeled data, real and synthetic reported separately: <b>every urgent review found</b> (100%); at least 90% of actionable reviews found with at least 60% precision; <b>no invented citations</b>; exact numbers for counting questions; at least 80% of owner questions answered correctly; and retrieval measured against the simpler alternative of sending every comment to the model.</p>
+
+<h2>2. Why this is the solution</h2>
+
+<p>The solution has three parts: <b>(1)</b> a local AI model reads <i>every</i> comment and labels it urgent / review / normal, with an alert-word safety net that can only raise severity; <b>(2)</b> the owner asks questions in plain Spanish, and a router sends counting questions to exact SQL and meaning questions to semantic search plus the model, which must cite the reviews it uses; <b>(3)</b> every citation is checked against the reviews the model was given. Each choice below was made against an alternative, and most were measured.</p>
+
+<table class="fixed">
+  <tr><th style="width:20%">Decision</th><th style="width:38%">Chosen, and why</th><th style="width:42%">Rejected alternative, and the evidence</th></tr>
+  <tr><td class="n">Decide from the text</td>
+      <td>An LLM classifies every comment by what it reports, not by its stars.</td>
+      <td><b>Filter by low ratings:</b> finds 10 of 14 actionable reviews and misses urgent R00309 (5★).</td></tr>
+  <tr><td class="n">Domain context for the model</td>
+      <td>A context file (<code>CLAUDE.md</code>): severity definitions, local slang, the rule that a review is data, never instructions.</td>
+      <td><b>Bare prompt (v0):</b> precision 8/33 (flagged plain praise) and it obeyed a prompt injection. With the context (v1): 13/13, injection ignored.</td></tr>
+  <tr><td class="n">Alert-word safety net</td>
+      <td>After the model, a short word list raises severity and never lowers it.</td>
+      <td><b>Model alone:</b> missed R00309 with and without the context file. With the net: real urgent recall 3/4 → <b>4/4</b>, no false alarms on the 997 real comments.</td></tr>
+  <tr><td class="n">Counting by SQL, not the model</td>
+      <td>Rules detect counting questions; fixed, parameterized SQL computes the number.</td>
+      <td><b>Let the model count or fill filters:</b> it read "de 1 estrella" as "at least 1 star" and reported <b>2,892</b> instead of <b>11</b>. With SQL: 13/13 counting questions exact.</td></tr>
+  <tr><td class="n">Retrieval for meaning questions</td>
+      <td>Embed the question, take the 20 closest reviews (half reserved for flagged ones on complaint questions), answer only from them.</td>
+      <td><b>Send all 997 comments in one prompt</b> (~18k tokens, it fits): measured on 26 questions, <b>1/16 vs 7/16</b> correct, and <b>13 invented review IDs vs 0</b>. The model loses the few reviews that matter among the compliments.</td></tr>
+  <tr><td class="n">Local model</td>
+      <td>Qwen 2.5 7B and bge-m3 embeddings via Ollama on the store's PC. Client reviews never leave the computer; no per-call cost.</td>
+      <td><b>Claude API by default:</b> stronger, but paid and sends client text to a third party; kept as an option. <b>Free cloud tiers:</b> some train on submitted data. <b>Fine-tuned classifier:</b> 14 real negatives are too few to train one.</td></tr>
+  <tr><td class="n">Retrieval pipeline over an n8n automation</td>
+      <td>Code in a repository: testable, versioned, reviewable.</td>
+      <td><b>n8n workflow:</b> would fit a weekly digest, but logic in a no-code flow is harder to test and review, and Q&A needs retrieval anyway.</td></tr>
+  <tr><td class="n">SQLite for everything</td>
+      <td>Reviews, labels and vectors in one file; brute-force search is under a second at ~1,000 vectors.</td>
+      <td><b>Chroma</b> (the original plan): an extra dependency with no benefit at this size. <b>DynamoDB copy:</b> risks touching the client's account.</td></tr>
+  <tr><td class="n">Citations, verified</td>
+      <td>Every answer cites review IDs; any ID not among the reviews given to the model marks the answer unverified.</td>
+      <td><b>Uncited summaries:</b> the owner could not check them. Result: 0 invalid citations in 40 answers.</td></tr>
+</table>
+
+<div class="avoid">
+<h2>3. What it achieves, and what it does not</h2>
+<table>
+  <tr><th>Criterion</th><th>Target</th><th>Result</th></tr>
+  <tr><td>Urgent reviews found</td><td>100%</td><td><b>Real 4/4</b> · held-out 8/8 · synthetic 15/17</td></tr>
+  <tr><td>Actionable reviews found / precision</td><td>≥ 90% / ≥ 60%</td><td><b>Real 14/14 / 14/14</b> (no false alarms)</td></tr>
+  <tr><td>Invented citations</td><td>0</td><td><b>0</b> in 40 answers</td></tr>
+  <tr><td>Counting questions exact</td><td>100%</td><td><b>13/13</b> within the question sets</td></tr>
+  <tr><td>Owner questions answered correctly</td><td>≥ 80%</td><td><b>Not met:</b> 15/25 and 10/15; about half of open-ended questions</td></tr>
+</table>
+<p>The core problem, finding what to act on among a thousand compliments, is solved on the real data. Open-ended questions are not: retrieval usually finds the right review and the 7B model drops it at the last step. A count with a month and no year ("¿…en septiembre?") silently counts every review. The planned weekly digest was cut. All of this, with specific failing inputs, is in <code>docs/failure-analysis.md</code> and <code>evidence/eval_results.md</code>.</p>
+</div>
+
+<p class="muted">Data: all 3,184 real ratings of one store, anonymized with the owner's permission (employees as EMP_xx, customer names and phones removed). Review IDs refer to the anonymized dataset. Repository: github.com/smolinag/calificapp-review-insights</p>
+
+</body>
+</html>
