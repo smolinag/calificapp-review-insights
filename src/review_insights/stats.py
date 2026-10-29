@@ -48,13 +48,15 @@ def run(conn, intent, filters=None):
         with_comment, n = conn.execute(
             f"SELECT sum(trim(coalesce(r.comment, '')) != ''), count(*) {base}", params).fetchone()
         return (round(100 * with_comment / n, 1) if n else None), f"{with_comment} de {n} reseñas", []
-    if intent in ("top_employee", "top_month"):
-        key = "r.employee" if intent == "top_employee" else "substr(r.created_at, 1, 7)"
-        rows = conn.execute(f"SELECT {key}, count(*) AS n {base} GROUP BY 1 ORDER BY n DESC LIMIT 3", params).fetchall()
+    if intent in ("top_employee", "top_month", "bottom_employee", "bottom_month"):
+        key = "r.employee" if intent.endswith("employee") else "substr(r.created_at, 1, 7)"
+        order = "DESC" if intent.startswith("top") else "ASC"
+        rows = conn.execute(f"SELECT {key}, count(*) AS n {base} GROUP BY 1 ORDER BY n {order} LIMIT 3", params).fetchall()
         if not rows:
             return None, None, []
         return rows[0][0], ", ".join(f"{k}: {n}" for k, n in rows), []
     raise ValueError(f"unknown intent: {intent}")
 
 
-INTENTS = ["count_reviews", "average_rating", "percent_with_comment", "top_employee", "top_month"]
+INTENTS = ["count_reviews", "average_rating", "percent_with_comment", "top_employee", "top_month", "bottom_employee",
+           "bottom_month"]
